@@ -1,0 +1,72 @@
+/*JS*/
+const root = ReactDOM.createRoot(
+  document.getElementById('root')
+);
+const nav = ReactDOM.createRoot(
+  document.getElementById('nav')
+);
+const sez = {
+    home60: <svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' fill='currentColor' class='bi bi-house' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z'/><path fill-rule='evenodd' d='M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z'/></svg>,
+    home18: <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='currentColor' class='bi bi-house' viewBox='0 0 20 20'><path fill-rule='evenodd' d='M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z'/><path fill-rule='evenodd' d='M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z'/></svg>,
+    user60: <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>,
+    user18: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>,
+    nameHome: 'Home', nameUser: 'Utente'
+};
+const page = {
+  Logo: sez.home60,
+  Str1: "Test",
+  Str2: sez.nameHome
+};
+
+function tick() {
+  const navbar= (
+    <nav class="navbar bg-body-tertiary">
+      <div>
+        <sapn /*onClick={goUser}*/ class="select">{sez.user18}Utente</sapn>&nbsp;&nbsp;
+        <sapn /*onClick={goHome}*/ class="select">{sez.home18}Home</sapn>
+        <span class="DX">{new Date().toLocaleTimeString()}</span>
+      </div>
+    </nav>
+  );
+  nav.render(navbar);
+}
+setInterval(tick, 1000);
+
+function formatName(page) {
+  return page.Str1 + ' ' + page.Str2;
+}
+  
+const element = (    
+  <div>
+    {page.Logo}
+    <h1>{formatName(page)}</h1>
+  </div>
+);
+root.render(element);
+
+/*CSS*/
+.DX
+{
+    position: absolute;
+    right: 1%;
+}
+.select { 
+  cursor: pointer; 
+}
+
+/*HTML*/
+<!DOCTYPE html>
+<html lang="it" data-bs-theme='dark'>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		    <title>HOME</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="nav"></div>
+        <div class="px-1 py-1 my-1 text-center" id="root"></div>
+    </body>
+</html>
