@@ -28,7 +28,6 @@ export default function Todo(props){
           onChange={handleChange}
         />
       </div>
-      
       <div className="btn-group">
         <button
           type="button"
