@@ -10,7 +10,7 @@ function Form(props){
     }else{
       e.preventDefault();
       props.addTask(name);
-      setName("");      
+      setName("");
     }
   }
   function handleChange(e) {
