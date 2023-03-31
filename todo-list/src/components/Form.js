@@ -5,9 +5,13 @@ function Form(props){
   const [name, setName] = useState('');
 
   function handleSubmit(e) {
-    e.preventDefault();
-    props.addTask(name);
-    setName("");
+    if(name===''){
+      alert("Inserire nome");
+    }else{
+      e.preventDefault();
+      props.addTask(name);
+      setName("");      
+    }
   }
 
   function handleChange(e) {
