@@ -13,7 +13,6 @@ function Form(props){
       setName("");      
     }
   }
-
   function handleChange(e) {
     setName(e.target.value);
   }

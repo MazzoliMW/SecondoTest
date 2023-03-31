@@ -110,5 +110,4 @@ export default function Todo(props){
     </li>
   );
   return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
-  console.log("main render");
 }
