@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { nanoid } from "nanoid";
 import React, { useState, useRef, useEffect } from "react";
 import Form from "./components/Form";
