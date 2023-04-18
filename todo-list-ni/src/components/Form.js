@@ -22,7 +22,7 @@ class Form extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form /* onSubmit={this.handleSubmit} */ action="http://localhost:3001/todos" method="POST">
         <h2 className="label-wrapper">
           <label htmlFor="new-todo-input" className="label__lg">
             Cosa deve essere fatto?

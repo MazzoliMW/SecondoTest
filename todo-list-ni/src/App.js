@@ -1,5 +1,6 @@
 import './App.css';
 import React, { Component } from "react";
+import axios from "axios";
 import { nanoid } from "nanoid";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
@@ -21,7 +22,7 @@ class App extends Component{
     };
   }
     
-  taskList = () => {    
+  taskList = () => {
     const tastksState = this.state.tasks
     return tastksState.filter(FILTER_MAP[this.state.filter]).map((task) => (
       <Todo
@@ -36,6 +37,12 @@ class App extends Component{
     ))
   };
 
+  componentDidMount(){
+    axios.get('http://localhost:3001/todos').then((res)=>{
+      this.setState({tasks:res.data});
+    })
+  }
+
   componentDidUpdate(prevProp, prevState, snapshot){
     if (prevState.tasks !== this.state.tasks) {
       if (prevState.length - prevState.tasks === -1) {
@@ -44,13 +51,30 @@ class App extends Component{
     }
   }
   toggleTaskCompleted = (id) => {
-    const updatedTasks = this.state.tasks.map((task) => {
+    const tasksSel = this.state.tasks.filter((task) => id === task.id);
+    const dati = tasksSel[0];
+    dati.completed = !dati.completed;
+    //console.log(dati);
+    axios.post(`http://localhost:3001/todo`, { dati })
+    .then(res => {
+      let DATA2=this.state.tasks;
+      let length =  DATA2.length;
+      //console.log(req);
+      for(let i = 0; i<length; i++){
+          if(DATA2[i]["id"] == res.data.dati){
+            console.log(DATA2[i]["completed"]);
+          }
+      }
+      //console.log(res);
+      //console.log(res.data.dati);
+    });
+/*     const updatedTasks = this.state.tasks.map((task) => {
       if (id === task.id) {
         return {...task, completed: !task.completed}
       }
       return task;
     });
-    this.setState({tasks: updatedTasks});
+    this.setState({tasks: updatedTasks}); */
   }
   deleteTask = (id) => {
     const remainingTasks = this.state.tasks.filter((task) => id !== task.id);
@@ -84,7 +108,7 @@ class App extends Component{
         this.setState({ filter : "Tutte" });        
     }
   }
-	render() {  
+	render() {
     const conteggio = this.taskList().length;
     const tasksNoun = this.taskList().length !== 1 ? 'rimaste' : 'rimasta';
     const headingText = `${conteggio} attività ${tasksNoun}`;

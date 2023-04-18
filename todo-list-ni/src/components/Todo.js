@@ -21,7 +21,7 @@ class Todo extends Component{
         this.editButtonRef.current.focus();
       }
     }
-  }    
+  }
   handleChange = (e) => {
     this.setState({ newName : e.target.value })
   }  
@@ -38,13 +38,15 @@ class Todo extends Component{
   }
      
   editingTemplate = () => (
-    <form className="stack-small" onSubmit={this.handleSubmit}>
+    <form className="stack-small" /* onSubmit={this.handleSubmit} */ action="http://localhost:3001/todos" method="POST">
+      <input type="hidden" name="id_modifica" value={this.props.id}></input>
       <div className="form-group">
         <label className="todo-label" htmlFor={this.props.id}>
           Nuovo nome per {this.props.name}
         </label>
         <input
           id={this.props.id}
+          name = "mod"
           className="todo-text form-control"
           type="text"
           value={this.newName}
@@ -69,38 +71,42 @@ class Todo extends Component{
     </form>
   );
   viewTemplate = () => (
-    <li className="todo stack-small">
-        <div className="c-cb form-check">
-            <input 
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id={this.props.id}
-              defaultChecked={this.props.completed} 
-              onChange={() => this.props.toggleTaskCompleted(this.props.id)}
-            />
-            <label className="todo-label form-check-label" htmlFor="todo-0">
-                {this.props.name}
-            </label>
-        </div>
-        <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-outline-info"
-              onClick={() => this.setState({ isEditing : true })}
-              ref={this.editButtonRef}
-            >
-              Modifica <span className="visually-hidden">{this.props.name}</span>
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-danger"
-              onClick={() => this.props.deleteTask(this.props.id)}
-            >
-              Elimina <span className="visually-hidden">{this.props.name}</span>
-            </button>
-        </div>
-    </li>
+    <form className="stack-small" /* onSubmit={this.handleSubmit} */ action="http://localhost:3001/todos" method="POST">
+      <li className="todo stack-small">
+          <div className="c-cb form-check">
+              <input 
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id={this.props.id}
+                defaultChecked={this.props.completed} 
+                onChange={/* this.provaTest(this.props.id) */() => this.props.toggleTaskCompleted(this.props.id)}
+              />
+              <label className="todo-label form-check-label" htmlFor="todo-0">
+                  {this.props.name}
+              </label>
+          </div>
+          <div className="btn-group">
+              <button
+                type="button"
+                className="btn btn-outline-info"
+                onClick={() => this.setState({ isEditing : true })}
+                ref={this.editButtonRef}
+              >
+                Modifica <span className="visually-hidden">{this.props.name}</span>
+              </button>
+              <button
+                type="submit"
+                name="id_delete"
+                value={this.props.id}
+                className="btn btn-outline-danger"
+                /* onClick={() => this.props.deleteTask(this.props.id)} */
+              >
+                Elimina <span className="visually-hidden">{this.props.name}</span>
+              </button>
+          </div>
+      </li>
+    </form>
   );
   render() {
     return (
