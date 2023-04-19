@@ -12,7 +12,7 @@ const DATA = [
 ];
 root.render(
   <React.StrictMode>
-    <App tasks={DATA} />
+    <App />
   </React.StrictMode>
 );
 

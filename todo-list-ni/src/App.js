@@ -1,9 +1,10 @@
 import './App.css';
 import React, { Component } from "react";
-import { nanoid } from "nanoid";
 import Form from "./components/Form";
+import CheckButton from "./components/CheckButton";
 import FilterButton from "./components/FilterButton";
 import Todo from "./components/Todo";
+import axios from "axios";
 
 const FILTER_MAP = {
   Tutte: () => true,
@@ -16,11 +17,60 @@ class App extends Component{
   constructor(props) {
     super(props);    
     this.state = {
-      tasks: props.tasks,
+      tasks: [],
       filter: 'Tutte'
     };
   }
-    
+  componentDidMount(){
+    axios.get('http://localhost:3001/todos').then(
+      res => {
+        this.setState({tasks: res.data});
+      }
+    )
+  }
+  checkAll = () =>{
+    const updatedTasksAll = axios.post('http://localhost:3001/todo/checkAll').then(
+      res => {
+        console.log(res.data);
+        debugger;
+        this.setState({tasks: res.data});
+        debugger;
+      }
+    );
+    console.log(updatedTasksAll);
+  }
+  toggleTaskCompleted = (id) => {
+    const updatedTasks = axios.post('http://localhost:3001/todo/checkEdit', { id }).then(
+      res => {
+        this.setState({tasks: res.data});
+      }
+    );
+    console.log(updatedTasks);
+  }
+  editTask = (id, newName) => {
+    const remainingTasks = axios.post('http://localhost:3001/todo/edit', { id, newName }).then(
+      res => {
+        this.setState({tasks: res.data});
+      }
+    );
+    console.log(remainingTasks);
+  }
+  deleteTask = (id) => {
+    const remainingTasks = axios.post('http://localhost:3001/todo/delete', { id }).then(
+      res => {
+        this.setState({tasks: res.data});
+      }
+    );
+    console.log(remainingTasks);
+  }
+  addTask = (name) => {
+    const newTask = axios.post('http://localhost:3001/todo/add', { name }).then(
+      res => {
+        this.setState({tasks: res.data});
+      }
+    );
+    console.log(newTask);
+  }
   taskList = () => {    
     const tastksState = this.state.tasks
     return tastksState.filter(FILTER_MAP[this.state.filter]).map((task) => (
@@ -43,32 +93,7 @@ class App extends Component{
       }
     }
   }
-  toggleTaskCompleted = (id) => {
-    const updatedTasks = this.state.tasks.map((task) => {
-      if (id === task.id) {
-        return {...task, completed: !task.completed}
-      }
-      return task;
-    });
-    this.setState({tasks: updatedTasks});
-  }
-  deleteTask = (id) => {
-    const remainingTasks = this.state.tasks.filter((task) => id !== task.id);
-    this.setState({tasks: remainingTasks});
-  }
-  editTask = (id, newName) => {
-    const editedTaskList = this.state.tasks.map((task) => {
-      if (id === task.id) {
-        return {...task, name: newName}
-      }
-      return task;
-    });
-    this.setState({tasks: editedTaskList });
-  }
-  addTask = (name) => {
-    const newTask = { id: `todo-${nanoid()}`, name, completed: false };
-    this.setState(prevState => ({ tasks: [...prevState.tasks, newTask] }));
-  }
+
   setFilter = (name) => {
     switch(name){
       case "Tutte":
@@ -107,6 +132,13 @@ class App extends Component{
 						{filterList}
 					</div> 
 				</div>
+        {/* <CheckButton /> */}
+        <button
+          className="btn btnprimary btnlg btn-outline-success"
+          onClick = {() => this.checkAll()}
+        >
+          Completa Tutto
+        </button>
 				<h2 id="list-heading" tabIndex="-1" ref={this.listHeadingRef}>{headingText}</h2>
 				<ul
 					className="todo-list stack-exception"
